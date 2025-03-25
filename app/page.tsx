@@ -1,11 +1,5 @@
-"use client";
-
-import { CiStar } from "react-icons/ci";
+import HeroSection from "@/components/HeroSection";
 
 export default function Home() {
-  return (
-    <main>
-      hello <CiStar size={44} color="green" />{" "}
-    </main>
-  );
+  return <HeroSection />;
 }
