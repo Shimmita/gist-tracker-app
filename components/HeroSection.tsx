@@ -18,7 +18,7 @@ function HeroSection() {
           </h1>
           <p className="text-gray-300 mt-5">
             Create, manage, and explore gists effortlessly. GitHub integration
-            for seamless workflow using GitHub gist API.
+            for seamless workflow to access numerous public APIs globally.
           </p>
 
           {/* Buttons based on user session */}

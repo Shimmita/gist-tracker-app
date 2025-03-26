@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 import GistModel from "@/models/GistSchema";
 import connectDB from "@/lib/connectDB";
 export async function POST(req: Request) {

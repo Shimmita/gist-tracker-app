@@ -18,6 +18,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const [errorMsg, setErrorMsg] = useState("");
+  const [processing, setProcessing] = useState(false);
 
   const router = useRouter();
   const { status } = useSession();
@@ -36,6 +37,8 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
+    // set processing true
+    setProcessing(true);
     const { email, password } = data;
 
     // using next auth signin
@@ -46,9 +49,15 @@ export default function LoginPage() {
     });
 
     if (res?.ok) {
+      // processing false
+      setProcessing(false);
+
       // Redirect after successful login
       router.push("/dashboard");
     } else {
+      // processing false
+      setProcessing(false);
+      
       setErrorMsg("Invalid email or password");
     }
   };
@@ -58,6 +67,9 @@ export default function LoginPage() {
       <div className="p-5 mt-5 rounded-lg shadow-md w-100">
         <h4 className="mb-10 text-center text-2xl font-semibold">Login</h4>
 
+        {processing && (
+          <p className="text-center text-green-500">Processing details...</p>
+        )}
         {errorMsg && <p className="text-red-500 text-center">{errorMsg}</p>}
 
         <form className="flex flex-col gap-8" onSubmit={handleSubmit(onSubmit)}>
