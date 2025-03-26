@@ -4,28 +4,23 @@ import GistModel from "@/models/GistSchema";
 import connectDB from "@/lib/connectDB";
 import { authOptions } from "@/lib/authOptions";
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(req: Request, context: { params: { id: string } }) {
   try {
-    // Ensure authentication
     const session = await getServerSession(authOptions);
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    // Ensure the ID is extracted correctly
-    if (!params?.id) {
+    const { id } = context.params;
+    if (!id) {
       return NextResponse.json({ message: "Invalid request" }, { status: 400 });
     }
 
     await connectDB();
 
-    // Find and delete only if the user owns the gist
     const deletedGist = await GistModel.findOneAndDelete({
-      _id: params.id,
-      userId: session.user?.email, 
+      _id: id,
+      userId: session.user?.email,
     });
 
     if (!deletedGist) {
